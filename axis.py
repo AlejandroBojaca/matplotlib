@@ -17,10 +17,12 @@ sns.despine(left=True, bottom=True, top=True, right=True)
 ax.tick_params(length=0, colors='k')
 
 #add custom labels to ticks
-labels = [item.get_text() for item in ax.get_xticklabels()]
-labels[1] = 'Testing'
+# labels = [item.get_text() for item in ax.get_xticklabels()]
+# labels[1] = 'Testing'
 
-ax.set_xticklabels(labels)
+ax.yaxis.set_major_formatter('%{x:1.0f}')
+
+# ax.set_xticklabels(labels)
 
 plt.plot(T , power)
 plt.show()

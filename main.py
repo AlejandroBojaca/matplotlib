@@ -25,6 +25,10 @@ y = np.array([0, 1.23, 5.34, 15.4, 54.1, 146.42, 0, 1.23, 50.34, 15.4, 10, 100])
 size = x.size
 extra_points = 150
 background_color = 'white'
+portfolio_name = 'Portfolio'
+# portfolio_name = 'ABCDEFGHIKLMNOPQRSTUVWXWZ'
+# portfolio_name = 'abcdefghiklmnopqrstuvwxwz'
+# portfolio_name = 'llllllllllllllllllllllllll'
 
 #font
 plt.rcParams['font.family'] = 'roboto'
@@ -44,9 +48,13 @@ px = 1/plt.rcParams['figure.dpi']
 fig = plt.figure(figsize=(1024*px, 512*px), facecolor=background_color)
 plt.subplots_adjust(top=0.63, bottom=0.23, left=0.05, right=0.89)
 
+
 #images
+portfolio_name_width = fig.text(-100, -100, portfolio_name, visible=True).get_window_extent(renderer=fig.canvas.get_renderer()).width
+print(portfolio_name_width)
+
 binance_logo = plt.imread(get_sample_data('binance_logo.png'))
-newax = fig.add_axes([0.14, 0.89, 0.05, 0.05])
+newax = fig.add_axes([0.05+(portfolio_name_width*0.0017), 0.89, 0.05, 0.05])
 newax.imshow(binance_logo)
 newax.axis('off')
 user_logo = plt.imread(get_sample_data('avatar.png'))
@@ -60,10 +68,10 @@ newax.axis('off')
 
 
 
+
 #backgroundcolor
 ax = plt.axes()
-sns.despine(left=True, bottom=True, top=True, right=True)
-ax.set_facecolor(background_color)
+ax.spines[['top', 'right', 'left', 'bottom']].set_visible(False)
 plt.tick_params(
     axis='both',          
     which='both',      
@@ -73,10 +81,12 @@ plt.tick_params(
     labelbottom=False,
     labelright=True,
     labelleft=False,
-    pad=10,
+    pad=5,
     labelcolor=(0, 0, 0, 0.5),
+    labelsize='small'
     )
 plt.margins(x=0)
+ax.yaxis.set_major_formatter('{x:1.0f}%')
 
 #shade
 plt.fill_between(
@@ -84,14 +94,13 @@ plt.fill_between(
         y1= y_smooth, 
         y2= zero,
         where= (-1 < xnew)&(xnew < 15),
-        color= "#ED932E",
+        color= "chart_shade_color",
         alpha= 0.2
     )
 
 
 #add texts
-
-plt.text(0, 1.66, "Portfolio", fontsize='xx-large', fontweight=500, transform=ax.transAxes)
+plt.text(0, 1.66, portfolio_name, fontsize='xx-large', fontweight=500, transform=ax.transAxes)
 plt.text(0, 1.55, "TradeLink portfolio • tracking for 35 days since Jan 01, 2020", fontsize='small', color='#00000080', transform=ax.transAxes)
 
 def generate_top_text(position, top_text, bottom_text): 
@@ -148,6 +157,7 @@ def generate_text(position, month):
 plt.text(0, -0.15, "2019", fontsize='medium', color='#000000bf', fontweight=600, transform=ax.transAxes)
 plt.text(0, -0.27, "2020", fontsize='medium', color='#000000bf', fontweight=600, transform=ax.transAxes)
 constant = 0.95
+print(13*constant/size)
 generate_text(constant/size, 'Jan')
 generate_text(2*constant/size, 'Feb')
 generate_text(3*constant/size, 'Mar')
@@ -160,9 +170,10 @@ generate_text(9*constant/size, 'Sep')
 generate_text(10*constant/size, 'Oct')
 generate_text(11*constant/size, 'Nov')
 generate_text(12*constant/size, 'Dec')
-generate_text(1.01, 'Annual')
+generate_text(1.03, 'Annual')
 
 #ploting
 plt.plot(xnew , y_smooth, color="#ED932E", linewidth=2)
 # plt.savefig('test.svg')
 plt.show()
+

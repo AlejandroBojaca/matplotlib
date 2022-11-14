@@ -14,6 +14,18 @@ fig = plt.figure(figsize=(13, 6))
 plt.subplots_adjust(top=0.6, bottom=0.2, left=0, right=0.95)
 ax = plt.axes()
 
+
+r = fig.canvas.get_renderer()
+t = plt.text(0.5, 0.5, 'T')
+
+bb = t.get_window_extent(renderer=r)
+width = bb.width
+height = bb.height
+
+print(width, height)
+
+
+
 newax = fig.add_axes([0, 0.8, 0.1, 0.1], anchor='NE', zorder=1)
 newax.imshow(im)
 newax.axis('off')
