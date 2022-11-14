@@ -116,7 +116,9 @@ plt.text(0, -0.15, "2019", fontsize='medium', color=third_text_color, fontweight
 plt.text(0, -0.27, "2020", fontsize='medium', color=third_text_color, fontweight=600, transform=ax.transAxes)
 x_limit = 0.95
 for i in range(number_profits):
-    generate_text((i+1)*x_limit/number_profits, months[i])
+  print(i%12, months[i%12])
+  generate_text((i+1)*x_limit/number_profits, months[i%12])
+
 generate_text(1.03, 'Annual')
 
 plt.plot(xnew , profits_smooth, color=line_color, linewidth=linewidth)
